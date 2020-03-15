@@ -30,7 +30,7 @@ def closest_approach(p1, p2, p3, p4):
         s = (D4321 * D4331 + D3121 * R22) / denom
         t = (D4321 * D3121 - D4331 * R12) / denom
 
-    print(f's = {s:f}, t={t:f}')
+    # print(f's = {s:f}, t={t:f}')
     if 0 <= s <= 1 and 0 <= t <= 1:
         c1 = p1 + s * (p2 - p1)
         c2 = p3 + t * (p4 - p3)

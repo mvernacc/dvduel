@@ -4,15 +4,19 @@ import sim
 
 colors = {'A': 'C0', 'B': 'C1'}
 
-def plot_pos_2d(axes, spacecraft_states_record, projectile_states_record, dims=(0, 1)):
+def plot_pos_2d(axes, spacecraft_states_record, projectile_states_record, hits, dims=(0, 1)):
     for key, scsr in spacecraft_states_record.items():
         axes.plot(
             scsr.pos[:, dims[0]], scsr.pos[:, dims[1]],
             color=colors[key], label=f'Spacecraft {key:s}')
-    for ip, psr in enumerate(projectile_states_record):
+    for ip, psr in projectile_states_record.items():
         axes.plot(
             psr.pos[:, dims[0]], psr.pos[:, dims[1]],
             color='black', label=f'Projectile {ip:d}')
+    for hit in hits:
+        axes.scatter(
+            hit['pos'][dims[0]], hit['pos'][dims[1]],
+            color='black', marker='*', label='Hit!')
     axes.set_xlabel(f'Position[{dims[0]}] [m]')
     axes.set_ylabel(f'Position[{dims[1]}] [m]')
     axes.set_title('Trajectories')
