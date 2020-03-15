@@ -14,10 +14,22 @@ def main():
     dt = 1e-3
 
     for i in range(simulator.n_steps - 1):
-        simulator.update(dt)
+        no_action = sim.SpacecraftAction(fire_railgun=None)
+        actions = {'A': no_action, 'B': no_action}
+        if i == 200:
+            actions['A'] = sim.SpacecraftAction(
+                fire_railgun=np.array([1000., 1000., 0.]))
+        simulator.update(actions, dt)
 
-    fig, axes = plt.subplots()
-    plotter.plot_pos_2d(axes, simulator.spacecraft_states_record)
+
+    fig_traj, axes_traj = plt.subplots()
+    plotter.plot_pos_2d(
+        axes_traj, simulator.spacecraft_states_record, simulator.projectile_states_record)
+    fig_resource, axes_resoure = plt.subplots(
+        nrows=2, ncols=1, figsize=(6, 7))
+    plotter.plot_resources(
+        axes_resoure, simulator.spacecraft_states_record, simulator.time_record)
+    fig_resource.tight_layout()
     plt.show()
 
 if __name__ == '__main__':
