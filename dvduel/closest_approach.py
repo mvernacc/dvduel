@@ -1,14 +1,6 @@
 import numpy as np
 
 
-def clamp01(x):
-    if x < 0:
-        return 0.
-    if x > 1:
-        return 1.
-    return x
-
-
 def closest_approach(p1, p2, p3, p4):
     """Closest approach of two line segments: (p1, p2) and (p3, p4).
 
@@ -36,19 +28,19 @@ def closest_approach(p1, p2, p3, p4):
         c2 = p3 + t * (p4 - p3)
         return np.linalg.norm(c2 - c1)
     # closest point on L1 to p3
-    s = clamp01(D3121 / R12)
+    s = np.clip(D3121 / R12, 0, 1)
     c1 = p1 + s * (p2 - p1)
     d1 = np.linalg.norm(c1 - p3)
     # closest point on L1 to p4
-    s = clamp01(D4121 / R12)
+    s = np.clip(D4121 / R12, 0, 1)
     c2 = p1 + s * (p2 - p1)
     d2 = np.linalg.norm(c2 - p4)
     # closest point on L2 to p1
-    t = clamp01(-D4331 / R22)
+    t = np.clip(-D4331 / R22, 0, 1)
     c3 = p3 + t * (p4 - p3)
     d3 = np.linalg.norm(c3 - p1)
     # closest point on L2 to p2
-    t = clamp01(-D4332 / R22)
+    t = np.clip(-D4332 / R22, 0, 1)
     c4 = p3 + t * (p4 - p3)
     d4 = np.linalg.norm(c4 - p2)
 
